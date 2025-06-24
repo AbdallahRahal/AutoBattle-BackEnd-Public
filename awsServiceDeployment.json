@@ -1,0 +1,47 @@
+{
+    "serviceName": "AutoBattleBackendService",
+    "cluster": "AutoBattleBackend",
+    "loadBalancers": [
+        {
+            "targetGroupArn": XXX,
+            "containerName": "AutoBattleBackend",
+            "containerPort": 3000
+        }
+    ],
+    "serviceRegistries": [],
+    "desiredCount": 1,
+    "launchType": "FARGATE",
+    "platformVersion": "1.4.0",
+    "taskDefinition": XXX,
+    "deploymentConfiguration": {
+        "deploymentCircuitBreaker": {
+            "enable": true,
+            "rollback": true
+        },
+        "maximumPercent": 200,
+        "minimumHealthyPercent": 100
+    },
+    "placementConstraints": [],
+    "placementStrategy": [],
+    "networkConfiguration": {
+        "awsvpcConfiguration": {
+            "subnets": [
+                XXX,
+                XXX,
+               XXX
+            ],
+            "securityGroups": [
+               XXX
+            ],
+            "assignPublicIp": "ENABLED"
+        }
+    },
+    "healthCheckGracePeriodSeconds": 250,
+    "schedulingStrategy": "REPLICA",
+    "deploymentController": {
+        "type": "ECS"
+    },
+    "enableECSManagedTags": true,
+    "propagateTags": "NONE",
+    "enableExecuteCommand": false
+}

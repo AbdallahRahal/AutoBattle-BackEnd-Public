@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Variables
+IMAGE_URI=XXX
+CLUSTER_NAME="XXX"
+SERVICE_NAME="XXX"
+REGION="eu-west-3"
+
+echo "Connect to aws cli"
+aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin XXX
+
+# Build
+echo "🛠️  Build Docker image..."
+docker build -t $IMAGE_URI .
+
+# Push
+echo "📤 Push Docker image to ECR..."
+docker push $IMAGE_URI
+
+# ECS redeploy
+echo "🚀 Trigger ECS service redeploy..."
+aws ecs update-service \
+  --cluster $CLUSTER_NAME \
+  --service $SERVICE_NAME \
+  --region $REGION \
+  --force-new-deployment
+
+echo "✅ Done."
